@@ -21,7 +21,7 @@ public class CountryController {
 	private CountryService countryService;
 
 	@RequestMapping(value = "/{code}", method = RequestMethod.GET)
-	public ResponseEntity<?> findCountryInfo(@PathVariable String code) {
+	public ResponseEntity<?> findCountryInfo (@PathVariable String code) throws Exception {
 		try {
 			CountryResponse country = countryService.findCountryByCode(code);
 			return ResponseEntity.status(HttpStatus.OK).body(country);
@@ -30,7 +30,8 @@ public class CountryController {
 					Errors.INVALID_COUNTRY_CODE.getMessage(), e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			APIError error = new APIError(Errors.INTERNAL_ERROR.getCode(), Errors.INTERNAL_ERROR.getMessage(),
 					e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
